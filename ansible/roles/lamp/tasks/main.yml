@@ -1,0 +1,22 @@
+---
+# tasks file for default 
+ - name: install httpd pakages
+   package:
+     name: "{{ web_servers}}" 
+     state: present
+ - name: to start and enable httpd
+   service:
+     name: "{{ web_servers}}" 
+     state: restarted
+     enabled: yes
+ - name: to install php
+   package:
+     name: "{{ php_packages }}"
+     state: present
+   notify:
+    - restart httpd 
+ - name: download web page
+   get_url:
+     url: https://raw.githubusercontent.com/asquarezone/AnsibleZone/master/ClassRoomExamples/July2018/basics/info.php
+     dest: /var/www/html/info.php            
+   

@@ -1,0 +1,26 @@
+---
+ - hosts: all
+   become: yes
+   tasks:
+     - name: install webserver 
+       package:
+         name: "{{ webserver_name }}"
+         state: present
+       notify: 
+        - restart webserver
+        - enabled webserver  
+     - name: install php
+       package:
+          name: "{{ php_package }}"
+          state: present
+       notify:
+        - restart webserver
+   handlers:
+     - name: restart webserver
+       service:
+         name: "{{ webserver_name }}"
+         state: restarted
+     - name: enable webserver
+       service:
+         name: "{{ webserver_name }}"
+         enabled: yes

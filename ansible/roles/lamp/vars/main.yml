@@ -1,0 +1,6 @@
+---
+# vars file for default
+web_servers: httpd
+php_packages:
+  - php 
+  - php-mysql

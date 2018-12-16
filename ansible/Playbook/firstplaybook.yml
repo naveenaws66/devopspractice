@@ -1,0 +1,7 @@
+---
+- hosts: all # tells on which mechines to perform tasks
+  become: yes #to get sudo privilege
+  tasks:
+  - name: execute ping on all hosts
+    ping:            #module to perforn ping
+ 

@@ -1,0 +1,15 @@
+---
+  - hosts: all
+    become: yes
+    vars:
+     - myname: firsttemplet
+    tasks:
+     - name: static file
+       copy:
+        src: text.txt
+        dest: /home/ansible/test
+     - name: dynamic file  
+       template: 
+        src: first.j2
+        dest: /home/ansible/first  
+       

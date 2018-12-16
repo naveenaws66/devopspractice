@@ -1,0 +1,25 @@
+---
+  - hosts: all
+    become: yes
+    tasks:
+  - name: to install httpd 
+    yum:
+      name: httpd
+      state: present 
+  - name: to start httpd
+    service:
+      name: httpd
+      state: started
+      enabled: yes
+  - name: to install php
+    yum:
+      name: "{{ item }}"    
+      state: present
+    with_items:
+      - php
+      - php-mysql 
+  - name: to restart httpd
+    service: 
+      name: httpd
+      state: restared
+        

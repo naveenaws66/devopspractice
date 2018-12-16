@@ -1,0 +1,47 @@
+--- 
+ - hosts: all
+   become: yes
+   tasks:
+  - name: to install apache2 on ubuntu
+    apt:
+      name: apache2
+      update_chache: yes
+      state: present
+    when: ansible_os_family == "Debian"   
+  - name: to install php 
+    apt:
+      name: "{{ item }}"
+      state: present
+    with_items:
+     - php 
+     - libapache2-mod-php
+     - php-mcrypt
+     - php-mysql
+    when: ansible_os_family == "Debian"
+  - name : restart apache2 on ubuntu
+    service: apache2
+    state: restarted 
+    when: ansible_os_family == "Debian"
+  - name: installing httpd on centos
+    yum:
+      name: httpd
+      state: present
+    when: ansible_os_family == "RedHat"
+  - name: enabling httpd service
+    service:
+      name: httpd
+      enabled: yes
+      state: restarted
+    when: ansible_os_family == "RedHat"    
+  - name: install php on centos
+    yum: "{{ item }}"
+    state: present
+    with_items:
+     - php
+     - php-mysql
+    when: ansible_os_family == "RedHat" 
+  - name: restarting httpd on centos
+    service:
+      name: httpd
+      state: restarted    
+    when: ansible_os_family == "RedHat"

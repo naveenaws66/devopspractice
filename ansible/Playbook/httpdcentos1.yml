@@ -1,0 +1,30 @@
+---
+ - hosts: RedHat
+   become: yes
+   vars: 
+     - web_server: httpd
+     - php_packages:
+       - php
+       - php-mysql
+   tasks:
+     - name: install pakage
+       package: 
+         name: "{{ web_server }}"
+         state: present
+     - name: to start and enable httpd 
+       service:
+         name: "{{ web_server }}"
+         state: restarted
+         enabled: yes
+     - name: to install php
+       package:
+         name: "{{ php_packages }}"
+         state: present
+       notify:
+        - restart httpd
+   handlers:         
+     - name: restart httpd
+       service:
+         name: "{{ web_server }}"
+         state: restarted
+        

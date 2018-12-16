@@ -1,0 +1,20 @@
+---
+- hosts: all
+  became: yes
+  tasks:
+  - name:update packages and install inginx
+    apt:
+	    name: inginx
+	    update_cache: yes
+	    state: present
+  - name: allow inginx in firewall 
+    ufw:
+      rule: allow
+      name: inginx
+  - name: start inginx
+    service:
+	    name: inginx
+	    enabled: yes
+	    state: restarted
+	 
+  
